@@ -1,0 +1,362 @@
+<!--scroll-content可以往下滚-->
+<!--overflow-scroll超出屏幕部分可以滚动-->
+<!--has-header表示知道有标题，给它留空-->
+<!--has-subheader表示知道有副标题，给它留空-->
+<!--
+light 白色 stable 灰色 positive 深蓝
+calm 浅蓝 balanced 绿色 energized 橙色
+assertive 红色 royal 紫色 dark 黑色
+-->
+<!--button-block 有圆角，填充整个屏幕-->
+<!--button-full 无圆角，填充整个屏幕-->
+<!--button-outline-->
+<!--button-clear-->
+<!--button-large-->
+<!--button-small-->
+<!--activated表示按钮被按下的样子-->
+<!--item-note备注说明-->
+<!-- header
+    item-input-inset：意思是，内有嵌入的input
+    在标题栏嵌入输入框，需要item-input-inset + item-input-wrapper一起配合
+-->
+<!--响应式布局相关的类：
+    responsive-lg: 当页面的宽度小于平板的横屏的宽度时，水平各列变为垂直堆叠布局
+    responsive-md: 当页面的宽度小于平板的竖屏的宽度时，水平各列变为垂直堆叠布局
+    responsive-sm: 当页面的宽度小于手机的横屏的宽度时，水平各列变为垂直堆叠布局
+    -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Title</title>
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+    <style>
+        .star img{
+            width:100%;
+            height:100%;
+            display: block;
+        }
+        .col{
+            text-align: center;
+        }
+    </style>
+    <!--因为要用到指令，指令需要被解析，所以需要引入ionic js文件-->
+    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
+    <script>
+        // 定义一个主模块
+        // 因为ionic提供了很多自己的(扩展的)指令和服务，所以需要
+        // 增加对"ionic"模块的依赖
+        var myapp = angular.module("myapp",["ionic"]);// 创建主模块
+        // 注册控制器
+        myapp.controller("myCtrl",function($scope){
+            // 准备数据
+            $scope.starArr = [
+                {value:1,icon:"ion-ios-star-outline"},
+                {value:2,icon:"ion-ios-star-outline"},
+                {value:3,icon:"ion-ios-star-outline"},  // val: 3   index: 2
+                {value:4,icon:"ion-ios-star-outline"},
+                {value:5,icon:"ion-ios-star-outline"}
+            ];
+            // 响应click事件
+            $scope.setRating = function(val){
+                var stars = $scope.starArr;
+                // 遍历stars数组，设置每一个元素的icon
+                for(var index=0;index<stars.length;index++){
+                    if(index<val){
+                        stars[index].icon = "ion-ios-star"; // 凡是索引小于val
+                    }else{
+                        stars[index].icon = "ion-ios-star-outline";// 凡是索引大于等于val
+                    }
+                }
+            };
+        });
+    </script>
+</head>
+<!--记得在body上写控制器-->
+<body ng-app="myapp" ng-controller="myCtrl">
+<!--header-->
+<div class="bar bar-header bar-positive">
+    <button class="button button-icon ion-navicon"></button>
+    <h1 class="title">火星商城</h1>
+    <button class="button button-icon ion-navicon"></button>
+</div>
+<!--副标题 subheader-->
+<div class="bar bar-subheader bar-balanced ">
+    <h1 class="title">这是副标题</h1>
+</div>
+<div class="bar bar-subheader">
+    <!--button-bar表示按钮组，它们会均匀平分宽度。放标题中，有间距-->
+    <div class="button-bar bar-energized">
+        <button class="button">政治</button>
+        <button class="button activated">经济</button>
+        <button class="button">体育</button>
+    </div>
+</div>
+
+<!--content-->
+<div class="scroll-content has-header has-subheader overflow-scroll">
+    <p>段落一</p>
+    <!--行-->
+    <div class="row">
+        <!--列-->
+        <div class="col col-50">
+            <div class="star"><img src="images/2.jpg"><br/>著名演员:刘诗诗</div>
+        </div>
+        <div class="col col-50">
+            <div class="star"><img src="images/3.jpg"><br/>著名演员:鹿晗</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-50 col-offset-25">
+            <div class="star"><img src="images/11.jpg"><br/>著名演员:刘诗诗</div>
+        </div>
+    </div>
+    <!--把图标放i标签中，再放到button标签里-->
+    <button class="button button-royal">
+        <i class="icon ion-heart-broken"></i> 心碎了
+    </button>
+    <!--直接把图标放到button标签里，指定图的位置（左或者右）-->
+    <button class="button button-calm icon-left ion-heart">爱心</button>
+    <button class="button button-calm icon-right ion-heart">爱心</button>
+    <!--指定按钮的样子-->
+    <button class="button button-positive icon-right ion-heart button-clear">爱心 </button>
+    <button class="button button-positive icon-right ion-heart button-outline">爱心3</button>
+    <!--图标按钮-->
+    <button class="button button-icon button-light icon ion-heart"></button>
+<!--button-bar表示按钮组，它们会均匀平分宽度-->
+    <div class="button-bar bar-energized">
+        <button class="button">政治</button>
+        <button class="button activated">经济</button>
+        <button class="button">体育</button>
+    </div>
+<!--按钮用a标签也可以-->
+    <div class="button-bar bar-balanced">
+        <a class="button" href="#">按钮一</a>
+        <a class="button activated">按钮二</a>
+        <a class="button">按钮三</a>
+        <a class="button">按钮四</a>
+    </div>
+    <!--list列表组件-->
+    <!--card放list旁边，与两边有间距，还有阴影效果-->
+    <ul class="list card">
+        <!--item-divider区分一个组，不用li用div也行-->
+        <div class="item item-divider item-calm">我的好友</div>
+        <li class="item">item 01</li>
+        <!--有个删除按钮，可以删掉这一行-->
+        <div class="item item-button-right">
+            item 02<button class="button button-positive">删除</button>
+        </div>
+        <!--字在左，图在右-->
+        <div class="item item-icon-right">
+            item 04<i class="icon ion-flag assertive"></i>
+        </div>
+        <li class="item">item 02</li>
+        <!--图标和字都在左边-->
+        <div class="item item-icon-left">
+            <i class="icon ion-home assertive"></i> item 03
+        </div>
+        <!--一图左，一图右-->
+        <div class="item item-icon-left item-icon-right">
+            <i class="icon ion-home assertive"></i>item 04
+            <i class="icon ion-flag assertive"></i>
+        </div>
+        <li class="item">item 03</li>
+        <!--图和字在左，右边有个徽章-->
+        <div class="item item-icon-left">
+            <i class="icon ion-person-stalker"></i>好友
+            <span class="badge badge-assertive">5</span>
+        </div>
+        <li class="item">item 04</li>
+        <!--灰色字体item-note来备注-->
+        <div class="item">
+            item 05<span class="item-note">备注说明</span>
+        </div>
+        <!--avatar为头像，左头像，右说明，记得标明头像的位置（左或者右）-->
+        <div class="item item-avatar-left">
+            <img src="images/5.jpg">
+            <h3>淘宝服装</h3>
+            <p>2016冬季流行新款</p>
+        </div>
+        <!--thumbnail为缩略图，右图，左说明，记得标明缩略图的位置（左或者右）-->
+        <div class="item item-thumbnail-right">
+            <img src="images/5.jpg">
+            <h3>淘宝服装</h3>
+            <p>2016冬季流行新款</p>
+        </div>
+        <!--展览用的图-->
+        <div class="item item-image">
+            <img src="images/logo.jpg">
+        </div>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+        <li class="item">item 02</li>
+<!--一个标准的展示，有发布人头像，个人信息，发布的图和可点赞的图标-->
+        <div class="list card">
+            <div class="item item-avatar-left">
+                <img src="images/5.jpg">
+                <h3>淘宝服装</h3>
+                <p>2016冬季流行新款</p>
+            </div>
+            <div class="item item-image">
+                <img src="images/13.jpg">
+            </div>
+            <!--普普通通的一个用a标签的赞-->
+            <a class="item item-icon-left" href="javascript:;">
+                <i class="icon ion-thumbsup calm"></i>赞
+            </a>
+            <!--五星好评-->
+            <div class="item">
+                五星好评:
+                <a href="javascript:;" style="text-decoration: none;" ng-repeat="star in starArr">
+                    <i class="icon {{star.icon}}" ng-click="setRating(star.value)"></i>
+                </a>
+            </div>
+            <!--把图标们放选项卡tabs中，每个图是tab-item-->
+            <div class="item tabs tabs-icon-left">
+                <div class="tab-item">
+                    <i class="icon ion-thumbsup assertive"></i>赞
+                </div>
+                <div class="tab-item">
+                    <i class="icon ion-thumbsdown calm"></i>踩
+                </div>
+                <div class="tab-item">
+                    <i class="icon ion-chatbox energized"></i>评论
+                </div>
+                <div class="tab-item">
+                    <i class="icon ion-share balanced"></i>分享
+                </div>
+            </div>
+        </div>
+        <!--选项卡-->
+        <!----------------------------图在上，字在下！--------遮住了一半？？？---------------------------------------->
+        <!--tabs-striped有一条横线，表示选中了-->
+        <!--tabs-icon-top图在上-->
+        <!--activated选中状态-->
+        <div class="tabs tabs-assertive tabs-icon-top tabs-striped">
+            <!--<div class="tabs tabs-assertive tabs-icon-left">-->
+            <!--<div class="tabs tabs-assertive tabs-icon-only">-->
+            <a class="tab-item">
+                <i class="icon ion-home"></i> 新闻
+            </a>
+            <a class="tab-item activated">
+                <i class="icon ion-flag activated"></i> 财经
+            </a>
+            <a class="tab-item">
+                <i class="icon ion-ios-basketball"></i> 体育
+            </a>
+        </div>
+        <div class="list list-inset">
+            <!--<div class="item item-input">-->
+            <div class="item item-input item-stacked-label">
+                <span class="input-label">账号:</span>
+                <input type="text" name="username" placeholder="手机/邮箱/账号"/>
+            </div>
+
+            <!--<div class="item item-input">-->
+            <div class="item item-input item-floating-label">
+                <span class="input-label">密码:</span>
+                <input type="password" name="username" placeholder="请输入密码"/>
+            </div>
+
+            <div class="item item-input-inset"><!--inset:说明内有嵌入的input-->
+                <div class="item-input-wrapper">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="search" placeholder="请输入搜索关键字"/>
+                </div>
+                <button class="button button-icon ion-android-search"></button>
+            </div>
+
+            <div class="item item-input">
+                <textarea placeholder="请输入个人简介" rows="5"></textarea>
+            </div>
+
+            <div class="item item-input item-select">
+                <span class="input-label">所在城市:</span>
+                <select>
+                    <option value="北京市">北京</option>
+                    <option value="深圳市">深圳</option>
+                    <option value="成都市">成都</option>
+                </select>
+            </div>
+
+            <!--单选按钮-->
+            <div class="item item-divider item-dark">性别</div>
+            <label class="item item-radio">
+                <input type="radio" name="gender" value="男" checked="checked"/>
+                <div class="radio-content">
+                    <div class="item-content">帅哥</div>
+                    <i class="radio-icon ion-checkmark assertive"></i>
+                </div>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" name="gender" value="女"/>
+                <div class="radio-content">
+                    <div class="item-content">美女</div>
+                    <i class="radio-icon ion-checkmark assertive"></i>
+                </div>
+            </label>
+
+            <!--复选框-->
+            <div class="item item-divider item-dark">爱好</div>
+            <div class="item item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" value="旅游">
+                </label>旅游
+            </div>
+            <div class="item item-checkbox">
+                <label class="checkbox checkbox-assertive">
+                    <input type="checkbox" value="美食">
+                </label>美食
+            </div>
+            <div class="item item-checkbox">
+                <label class="checkbox checkbox-energized">
+                    <input type="checkbox" value="电影">
+                </label>电影
+            </div>
+
+            <!--复选框充当开关按钮-->
+            <div class="item item-toggle">
+                是否同意本协议
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox"/>
+                    <div class="track"><div class="handle"></div></div>
+                </label>
+            </div>
+
+            <!--范围选择组件-->
+            <div class="item range range-positive">
+                <i class="icon ion-android-sunny assertive"></i>
+                <input type="range" name="volumn" min="0" max="100" value="50"/>
+                <i class="icon ion-fork positive"></i>
+            </div>
+
+            <button class="button button-full button-dark">登录</button>
+        </div>
+        <!--<div class="row responsive-lg">-->
+        <!--<div class="row responsive-md">-->
+        <!--小于手机宽-->
+        <div class="row responsive-sm">
+            <div class="col">col</div>
+            <div class="col">col</div>
+            <div class="col">col</div>
+            <div class="col">col</div>
+        </div>
+
+    </ul>
+
+</div>
+<!--footer-->
+<div class="bar bar-footer bar-assertive">
+    <button class="button button-icon ion-navicon"></button>
+    <h1 class="title">火星时代技术支持</h1>
+</div>
+</body>
+</html>
